@@ -2,6 +2,20 @@ let currentPlayer="X"
 const boxes = document.querySelectorAll(".box");
 const player1 = document.getElementById("player1");
 const player2 = document.getElementById("player2");
+let playerXMoves = [];
+let counter=0;
+
+const winningPatterns = [
+    [0, 1, 2], 
+    [3, 4, 5], 
+    [6, 7, 8], 
+    [0, 3, 6], 
+    [1, 4, 7], 
+    [2, 5, 8], 
+    [0, 4, 8], 
+    [2, 4, 6]  
+];
+
 
 function activePlayer()
 {
@@ -15,9 +29,7 @@ function activePlayer()
 }
  }
 
-
-
-boxes.forEach(box=> {
+boxes.forEach((box,index)=> {
 
     box.addEventListener("click", function() 
     {
@@ -26,18 +38,68 @@ boxes.forEach(box=> {
         this.textContent = currentPlayer;
             if(currentPlayer === "X")
             {
+                playerXMoves.push(index);
+               if(counter===3)
+                {
+                    counter;
+                } 
+                counter++;
                 currentPlayer = "O";
-
+                activePlayer();
+               computer();
             }
             else
             {
                 currentPlayer = "X";
+                activePlayer();
             }
-            activePlayer();
+           
       }
     })
 
 });
+
+function computer() {
+
+
+for(let i=0;i<winningPatterns.length;i++)
+{
+  
+   for(let j=0;j<counter;j++)
+   {
+     if(winningPatterns[i][j]===playerXMoves[j])
+     {
+        boxes[i][j+1].textContent = "O";
+     }
+   
+   
+   }
+   
+  
+}
+
+//     [0, 1, 2],    
+//     [3, 4, 5], 
+//     [6, 7, 8], 
+//     [0, 3, 6], 
+//     [1, 4, 7], 
+//     [2, 5, 8], 
+//     [0, 4, 8], 
+//     [2, 4, 6]  
+
+
+}
+    
+
+
+    
+
+
+
+
+
+
+
 
 function rematch()
 {
